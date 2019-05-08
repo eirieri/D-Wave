@@ -4,13 +4,13 @@ from itertools import combinations
 Sampler = EmbeddingComposite(DWaveSampler())
 
 
-#traveling salesman problem 
+#Traveling Salesman problem 
 
 distance = [4,6,5,1,4,7]
 
 E = len(distance)
 
-N = int((1+(1+E*8)**0.5)/2) #calcualte based on edges
+N = int((1+(1+E*8)**0.5)/2) #calculate based on edges
 
 cities = list(range(N))
  
@@ -42,23 +42,10 @@ for i in range(E):
 			if row_edges[0] in col_edges or row_edges[1] in col_edges:
 				Q[(i,j)] = 2*gamma
 
-
 print(Q) 
-
 
 Response = EmbeddingComposite(DWaveSampler()).sample_qubo(Q, chain_strength=chainstrength, num_reads=numruns)
 
-## ------- Return results to user -------
-'''
-#R = iter(response)
-#E = iter(response.data())
-#for line in response:
-#   sample = next(R)
-#    S1 = [S[i] for i in sample if sample[i] > 0]
-#    S0 = [S[i] for i in sample if sample[i] < 1]
-#    print("S0 Sum: ", sum(S0), "\tS1 Sum: ", sum(S1), "\t", S0)
-#Response = Sampler.sample_qubo(Q, num_reads=100)
-'''
 print(Response)
 for index in range(len(Response.record.sample)):
     print("Sample:", Response.record.sample[index], "\tEnergy: ", Response.record.energy[index]) 
